@@ -8,6 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Suppress("DEPRECATION")
 @Singleton
 class NetworkHelper @Inject constructor(@ApplicationContext private val context: Context) {
 
@@ -17,12 +18,12 @@ class NetworkHelper @Inject constructor(@ApplicationContext private val context:
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val networkCapabilities = connectivityManager.activeNetwork ?: return false
-            val activeNetwork =
+            val actNw =
                 connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
             result = when {
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
                 else -> false
             }
         } else {
@@ -41,4 +42,6 @@ class NetworkHelper @Inject constructor(@ApplicationContext private val context:
 
         return result
     }
+
+
 }
