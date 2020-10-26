@@ -6,13 +6,13 @@ import com.mindorks.framework.mvvm.data.api.ApiHelperImpl
 import com.mindorks.framework.mvvm.data.api.ApiService
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
 @InstallIn(ApplicationComponent::class)
@@ -41,7 +41,7 @@ class ApplicationModule {
         BASE_URL: String
     ): Retrofit =
         Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .build()
